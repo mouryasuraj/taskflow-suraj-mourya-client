@@ -13,14 +13,17 @@ import DecisionBox from "../../components/DecisionBox"
 const Projects = () => {
     const [showProjectForm, setShowProjectForm] = useState(false)
     const [open, setOpen] = useState(false)
-    const [projectId, setProjectId] = useState("")
     const [actionType, setActionType] = useState("")
-    const { handleDelete } = useProject(setShowProjectForm, showProjectForm, setOpen, actionType,projectId)
+    const [projectData, setProjectData] = useState(null)
+    const { handleDelete} = useProject(setShowProjectForm, showProjectForm, setOpen, actionType,projectData)
     const { isLoading, projects } = useSelector(store => store.projects)
-    
+
+
 
     if (!projects) return <SpinnerLoader />
-    const allProjects = projects.projects
+    const allProjects = projects.projects || []
+
+    
 
 
     return (
@@ -29,8 +32,8 @@ const Projects = () => {
                 <PageTitle name={"Projects"} />
                 <div>
                     <Button fn={() => {
-                            setActionType("create")
-                            setShowProjectForm(true)
+                        setActionType("create")
+                        setShowProjectForm(true)
                     }} btnTxt={"Create Project"} isLoading={isLoading} icon={faPlus} />
                 </div>
             </div>
@@ -38,12 +41,19 @@ const Projects = () => {
                 <div className="flex gap-5 flex-wrap">
                     {
                         allProjects.map((data) => (
-                            <ProjectCard setActionType={setActionType} key={data._id} data={data} setProjectId={setProjectId} setOpen={setOpen} setShowProjectForm={setShowProjectForm} />
+                            <ProjectCard
+                                key={data._id}
+                                setProjectData={setProjectData}
+                                setActionType={setActionType}
+                                data={data}
+                                setOpen={setOpen} 
+                                setShowProjectForm={setShowProjectForm} 
+                                />
                         ))
                     }
                 </div>
             </div>
-            {showProjectForm && <ProjectForm projectId={projectId} setOpen={setOpen} showProjectForm={showProjectForm} setShowProjectForm={setShowProjectForm} type={actionType} />}
+            {showProjectForm && <ProjectForm setOpen={setOpen} showProjectForm={showProjectForm} setShowProjectForm={setShowProjectForm} type={actionType} projectData={projectData} />}
             {open && <DecisionBox type={"Confirmation"} title="Are you sure you want to delete this project?" setOpen={setOpen} onYesClick={() => handleDelete(projectId)} />}
 
         </div>

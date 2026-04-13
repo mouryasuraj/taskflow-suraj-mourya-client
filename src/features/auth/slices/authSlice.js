@@ -1,19 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import loginService from '../services/loginService.js'
 import signUpService from "../services/signupService.js";
-import { login, signup, logout } from "./authThunks.js";
+import { login, signup, logout, getUsers } from "./authThunks.js";
 import handlePending from "../../../utils/constants/handlePending.js";
 
 
 // Initial State 
 const initialState = {
     user: null,
-    isLoading: false,
+isLoading: false,
     isError: false,
     isSuccess: false,
     message: "",
     isAuthenticated:false,
     isAuthChecked:false,
+    allUsers:[]
 }
 
 
@@ -45,6 +46,8 @@ const authSlice = createSlice({
             .addCase(logout.rejected, loginService.handleLogoutRejected)
             .addCase(signup.fulfilled, signUpService.handleFulfilled)
             .addCase(signup.rejected, signUpService.handleRejected)
+            .addCase(getUsers.fulfilled, loginService.handleGetUsersFulfilled)
+            .addCase(getUsers.rejected, loginService.handleGetUsersRejected)
             .addMatcher((a) => a.type.endsWith("/pending"), handlePending)
     }
 })

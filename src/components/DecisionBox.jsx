@@ -3,7 +3,7 @@ import { lightBlue } from '../utils/constants'
 
 const DecisionBox = ({ setOpen, type, onYesClick,title="" }) => {
     return (
-        <div className='fixed top-0 right-0 flex items-center justify-center h-screen w-screen bg-black/70'>
+        <div className='fixed top-0 right-0 flex items-center z-3 justify-center h-screen w-screen bg-black/70'>
             <div className=' w-[90vw] md:w-fit bg-white rounded-xl px-4 py-2'>
                 <h1 className='font-bold text-gray-700 text-xl'>{type}</h1>
             <h2 className='my-2'>{title}</h2>

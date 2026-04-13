@@ -14,6 +14,11 @@ const handleLogout = async () =>{
   return response.data
 }
 
+const handleGetUsers = async () =>{
+  const response = await axiosInstance.get("/auth/getusers")
+  return response.data
+}
+
 const handleFulfilled = (state, action) => {
   state.user = action.payload?.data || null;
   state.isLoading = false;
@@ -55,6 +60,25 @@ const handleLogoutRejected = (state, action) => {
 
 };
 
+const handleGetUsersFulfilled = (state, action) => {
+console.log("mera dafa", action?.payload?.data)
+  state.allUsers = action?.payload?.data;
+  state.isLoading = false;
+  state.isError = false;
+  state.isSuccess = true;
+  state.message = action.payload?.message || "fetched all users.";
+};
+
+const handleGetUsersRejected = (state, action) => {
+  state.allUsers = null;
+  state.isLoading = false;
+  state.isError = true;
+  state.isSuccess = false;
+  state.message =
+    action.payload?.message || "Something went wrong. Please try again later.";
+
+};
+
 const validateLoginField = (userDetails) =>{
   const {email, password} = userDetails;
   if(!email || !password) {
@@ -68,5 +92,5 @@ const validateLoginField = (userDetails) =>{
 
 
 
-const loginService = { handleLogin, handleFulfilled, handleRejected, validateLoginField,handleLogout, handleLogoutFulfilled, handleLogoutRejected };
+const loginService = { handleLogin, handleFulfilled, handleRejected, validateLoginField,handleLogout, handleLogoutFulfilled, handleLogoutRejected, handleGetUsers, handleGetUsersFulfilled, handleGetUsersRejected };
 export default loginService

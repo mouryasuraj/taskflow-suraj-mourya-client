@@ -41,3 +41,23 @@ export const deleteProject = createAsyncThunk("/deleteProjects", async(data, thu
         return thunkAPI.rejectWithValue({message:error?.reponse?.data.error || "something went wrong"})
     }
 })
+
+export const getProjectDetails = createAsyncThunk("/getProjectDetails", async(data, thunkAPI)=>{
+    try {
+        const response = await projectService.handleGetProject(data)
+        return response
+    } catch (error) {
+        console.log(error)
+        return thunkAPI.rejectWithValue({message:error?.reponse?.data.error || "something went wrong"})
+    }
+})
+
+export const getProjectStats = createAsyncThunk("/getprojectstats", async(data, thunkAPI)=>{
+    try {
+        const response = await projectService.handleGetProStats(data)
+        return response
+    } catch (error) {
+        console.log(error)
+        return thunkAPI.rejectWithValue({message:error?.reponse?.data.error || "something went wrong"})
+    }
+})

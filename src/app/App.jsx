@@ -10,6 +10,7 @@ import SignUp from '../features/auth/components/SignUp'
 import ProtectedRoute from '../components/ProtectedRoute'
 import UserLayout from '../Layout/UserLayout'
 import Projects from '../features/projects/Projects'
+import ProjectDetails from '../features/projects/components/ProjectDetails'
 
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/projects",
         element: <Projects /> ,
+      },
+      {
+        path: "/project/:projectId",
+        element: <ProjectDetails /> ,
       }
     ]
   },
