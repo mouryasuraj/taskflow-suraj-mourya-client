@@ -179,7 +179,7 @@ const handleCreateTask = async (data) =>{
 
 const handleCreateTaskFulfilled = (state, action) => {
   const oldTask = state.tasks
-  state.task = [action.payload.data,...oldTask] || null;
+  state.tasks = [action.payload.data,...oldTask] || null;
   state.isLoading = false;
   state.isError = false;
   state.isSuccess = true;
@@ -201,16 +201,16 @@ const handleCreateTaskRejected = (state, action) => {
 
 // Update Task - started
 
-const handleUpdateTask = async (data) =>{
-    const {payload, taskId} = data
+const handleUpdateTask = async ({payload,taskId}) =>{
+  console.log(payload, taskId)
     const response = await axiosInstance.patch(`/projects/task/${taskId}`, payload)
     return response.data
 }
 
 const handleUpdateTaskFulfilled = (state, action) => {
-  const oldTask = state.projects.tasks
+  const oldTask = state.tasks
   const filterData = oldTask.filter((d) => d._id !== action.payload.data._id)
-  state.tasks = {...state.projects, tasks:[action.payload.data,...filterData]} || null;
+  state.tasks = [action.payload.data,...filterData] || null;
   state.isLoading = false;
   state.isError = false;
   state.isSuccess = true;
@@ -230,7 +230,33 @@ const handleUpdateTaskRejected = (state, action) => {
 
 
 
+// Delete Task - started
 
+const handleDeleteTask = async ({projectId,taskId}) =>{
+    const response = await axiosInstance.delete(`/projects/task/${taskId}?project_id=${projectId}`)
+    return response.data
+}
+
+const handleDeleteTaskFulfilled = (state, action) => {
+  const oldTask = state.tasks
+  const filterData = oldTask.filter((d) => d._id !== action.payload.data._id)
+  state.tasks = filterData || null;
+  state.isLoading = false;
+  state.isError = false;
+  state.isSuccess = true;
+  state.message = action.payload?.message || "project deleted successfully";
+  showMessage("success",state.message)
+};
+
+
+const handleDeleteTaskRejected = (state, action) => {
+  state.tasks = [];
+  state.isLoading = false;
+  state.isError = true;
+  state.isSuccess = false;
+  state.message = action.payload?.message || "Something went wrong. Please try again later.";
+  showMessage("error", state.message);
+};
 
 
 const getStatus = (status) => {
@@ -255,6 +281,6 @@ const getSeverity = (s) => {
 
 
 
-const projectService = {handleGetProjects, handleFulfilled, handleRejected,handleCreateProject, handleCreateProFulfilled, handleCreateProRejected, handleDeleteProFulfilled, handleDeleteProRejected, handleDeleteProject, handleUpdateProFulfilled, handleUpdateProRejected, handleUpdateProject, handleGetProFulfilled, handleGetProRejected, handleGetProject, handleGetProStatsFulfilled, handleGetProStatsRejected, handleGetProStats,getStatus,getSeverity, handleUpdateTask, handleUpdateTaskFulfilled, handleUpdateTaskRejected, handleCreateTask, handleCreateTaskFulfilled, handleCreateTaskRejected}
+const projectService = {handleGetProjects, handleFulfilled, handleRejected,handleCreateProject, handleCreateProFulfilled, handleCreateProRejected, handleDeleteProFulfilled, handleDeleteProRejected, handleDeleteProject, handleUpdateProFulfilled, handleUpdateProRejected, handleUpdateProject, handleGetProFulfilled, handleGetProRejected, handleGetProject, handleGetProStatsFulfilled, handleGetProStatsRejected, handleGetProStats,getStatus,getSeverity, handleUpdateTask, handleUpdateTaskFulfilled, handleUpdateTaskRejected, handleCreateTask, handleCreateTaskFulfilled, handleCreateTaskRejected, handleDeleteTask, handleDeleteTaskFulfilled, handleDeleteTaskRejected}
 
 export default projectService

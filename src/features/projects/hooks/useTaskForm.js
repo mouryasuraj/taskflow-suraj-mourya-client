@@ -6,11 +6,13 @@ import { createTask, updateTask } from "../slices/taskThunks";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getUsers } from "../../auth/slices/authThunks";
+import { formatDate } from "../../../utils/constants/formatDate";
+import { formatInTimeZone } from "date-fns-tz";
 
 const useTaskForm = (setShowTaskForm) => {
   const dispatch = useDispatch();
   const {projectId} = useParams()
-  const {taskAction, taskData} = useSelector(store => store.projects)
+  const {taskAction, taskData, taskId} = useSelector(store => store.projects)
   const {allUsers} = useSelector(store => store.auth)
   const {
     register,
@@ -39,7 +41,7 @@ const useTaskForm = (setShowTaskForm) => {
     if (taskAction === "create") {
       data = await dispatch(createTask(payload)).unwrap();
     } else if (taskAction === "update") {
-      data = await dispatch(updateTask(payload)).unwrap();
+      data = await dispatch(updateTask({payload,taskId})).unwrap();
     }
     if (data.status) {
       setShowTaskForm(false);

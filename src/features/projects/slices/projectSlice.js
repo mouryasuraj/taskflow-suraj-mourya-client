@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createProject, deleteProject, getProjectDetails, getProjectStats, projects, updateProject } from "./projectThunks";
+import { createProject, deleteProject, deleteTask, getProjectDetails, getProjectStats, projects, updateProject } from "./projectThunks";
 import handlePending from "../../../utils/constants/handlePending";
 import projectService from "../services/projectServices";
 import { createTask, updateTask } from "./taskThunks";
@@ -57,6 +57,8 @@ const projectSlice = createSlice({
         .addCase(createTask.rejected, projectService.handleCreateTaskRejected)
         .addCase(updateTask.fulfilled, projectService.handleUpdateTaskFulfilled)
         .addCase(updateTask.rejected, projectService.handleUpdateTaskRejected)
+        .addCase(deleteTask.fulfilled, projectService.handleDeleteTaskFulfilled)
+        .addCase(deleteTask.rejected, projectService.handleDeleteTaskRejected)
         .addMatcher((a)=> a.type.endsWith("/pending"), handlePending)
     }
 })

@@ -8,7 +8,7 @@ import handlePending from "../../../utils/constants/handlePending.js";
 // Initial State 
 const initialState = {
     user: null,
-isLoading: false,
+    isLoading: false,
     isError: false,
     isSuccess: false,
     message: "",

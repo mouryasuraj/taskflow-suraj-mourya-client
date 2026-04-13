@@ -15,8 +15,8 @@ const LoginForm = () => {
 
 
     return (
-        <div className="w-[50%]">
-            <div className="px-5 relative bg-white py-12 rounded-2xl w-[60%] mx-auto space-y-3 shadow-lg shadow-[#a6c2c2]">
+        <div className="lg:w-[50%] w-full">
+            <div className="px-5 relative bg-white py-12 rounded-2xl lg:w-[60%] w-full mx-auto space-y-3 shadow-lg shadow-[#a6c2c2]">
                 <h2 className="text-2xl font-semibold text-center text-[#012D52]">
                     {loginTitle}
                 </h2>

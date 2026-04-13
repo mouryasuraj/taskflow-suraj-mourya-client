@@ -61,7 +61,6 @@ const handleLogoutRejected = (state, action) => {
 };
 
 const handleGetUsersFulfilled = (state, action) => {
-console.log("mera dafa", action?.payload?.data)
   state.allUsers = action?.payload?.data;
   state.isLoading = false;
   state.isError = false;

@@ -61,3 +61,13 @@ export const getProjectStats = createAsyncThunk("/getprojectstats", async(data, 
         return thunkAPI.rejectWithValue({message:error?.reponse?.data.error || "something went wrong"})
     }
 })
+
+export const deleteTask = createAsyncThunk("/deleteTask", async(data, thunkAPI)=>{
+    try {
+        const response = await projectService.handleDeleteTask(data)
+        return response
+    } catch (error) {
+        console.log(error)
+        return thunkAPI.rejectWithValue({message:error?.reponse?.data.error || "something went wrong"})
+    }
+})

@@ -14,9 +14,11 @@ import { setTaskAction } from '../slices/projectSlice'
 import DecisionBox from '../../../components/DecisionBox'
 
 const ProjectDetails = () => {
-    const { dispatch, open, setOpen} = useProjectDetails()
+    const { dispatch, open, setOpen,handleDelete} = useProjectDetails()
     const [showTaskForm, setShowTaskForm] = useState(false)
     const { tasks, proDetails, projectStats, isLoading } = useSelector(store => store.projects)
+
+    
 
     if (!proDetails || !projectStats) return <SpinnerLoader />
     const { name, description, createdAt, updatedAt } = proDetails
@@ -47,7 +49,7 @@ const ProjectDetails = () => {
                             <div className='mt-2 flex items-center justify-between'>
                                 {
                                     statusCount.length === 0 ? "No tasks" : statusCount.map((data) => {
-                                        return <ProjectStats key={data.count} count={data.count} status={data._id} />
+                                        return <ProjectStats key={data._id} count={data.count} status={data._id} />
                                     })
                                 }
                             </div>

@@ -40,7 +40,7 @@ const Projects = () => {
             <div className="mt-5">
                 <div className="flex gap-5 flex-wrap">
                     {
-                        allProjects.map((data) => (
+                        allProjects.length===0 ? "No project found" :allProjects.map((data) => (
                             <ProjectCard
                                 key={data._id}
                                 setProjectData={setProjectData}

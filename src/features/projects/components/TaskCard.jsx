@@ -9,11 +9,12 @@ import { setTaskAction, setTaskData, setTaskId } from '../slices/projectSlice'
 
 const TaskCard = ({ data, setOpen, setShowTaskForm }) => {
     const { _id, title, description, status, priority, assignee_id } = data
-    const [showAction, setShowActions] = useState()
+    const [showAction, setShowActions] = useState(false)
     const createdAt = formatDate(data.createdAt)
-    const updatedAt = formatDate(data.updatedAt)
     const due_date = formatDate(data.due_date)
     const dispatch = useDispatch()
+
+    console.log("assignee_id",assignee_id)
 
 
     const dropdownRef = useRef(null);
@@ -47,7 +48,7 @@ const TaskCard = ({ data, setOpen, setShowTaskForm }) => {
                         <div onClick={(e) => {
                             e.preventDefault()
                             e.stopPropagation()
-                            setShowActions(true)
+                            setShowActions(prev => !prev)
                         }} className="hover:bg-gray-200 cursor-pointer rounded-full px-1.75 py-1">
                             <FontAwesomeIcon icon={faEllipsisV} />
                         </div>
